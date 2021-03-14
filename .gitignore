@@ -1,0 +1,7 @@
+__pycache__/
+
+res/*
+saves/*
+!__init__.py
+
+keys.py
