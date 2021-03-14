@@ -4,16 +4,13 @@ on:
   push:
     branches: [ main ]
   workflow_dispatch:
-  
-defaults:
-  run:
-    working-directory: /home/pi/nanideshiko-bot
 
 jobs:
   deploy:
     runs-on: self-hosted
     steps:
-      - name: Pull new commit
+      - name: Pull new commits
         run: git pull
-      - name: Restart bot 
+        working-directory: /home/pi/nanideshiko-bot
+      - name: Restart bot service
         run: sudo systemctl restart nanideshiko
