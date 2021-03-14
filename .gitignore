@@ -5,3 +5,5 @@ saves/*
 !__init__.py
 
 keys.py
+
+.DS_Store
