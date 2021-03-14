@@ -1,0 +1,19 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+  
+defaults:
+  run:
+    working-directory: /home/pi/nanideshiko-bot
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Pull new commit
+        run: git pull
+      - name: Restart bot 
+        run: sudo systemctl restart nanideshiko
