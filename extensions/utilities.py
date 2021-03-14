@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 
+import typing
+
 
 class Utilities(commands.Cog):
 
@@ -14,14 +16,6 @@ class Utilities(commands.Cog):
             return webhooks[0]
         else:
             return await channel.create_webhook(name="nanideshiko")
-
-    @commands.command()
-    async def avatar(self, ctx, user: discord.Member = None):
-        """Gets <user> avatar"""
-        if user is None:
-            await ctx.reply(ctx.author.avatar_url)
-        else:
-            await ctx.reply(user.avatar_url)
 
     @commands.command()
     async def ping(self, ctx):
@@ -48,39 +42,19 @@ class Utilities(commands.Cog):
         channel = self.bot.get_channel(int(id))
         await channel.send(msg)
 
-    @commands.has_permissions(manage_messages=True)
-    @commands.command()
-    async def move(self, ctx, destination: discord.TextChannel, start_msg_id: int):
-        """Move entire connversations to another text channel
-        
-        Usage: `move #destination start_msg_id (@mentions)*`
-        It will move all messages from @mentions (everybody if unspecified), after the provided start_msg_id (excluded), up to now, to #destination
-        """
-        async with ctx.channel.typing():
-            webhook = await Utilities.get_webhook(destination)
-            start_msg = await ctx.fetch_message(start_msg_id)
-            if ctx.message.mentions != []:
-                members = ctx.message.mentions
-                unselected = False
-            else:
-                unselected = True
-            async for message in ctx.channel.history(limit=None, after=start_msg, before=ctx.message, oldest_first=True):
-                if unselected or (message.author in members):
-                    try:
-                        content = message.content
-                    except:
-                        content = None
-                    try:
-                        file =  await message.attachments[0].to_file()
-                    except:
-                        file = None
-                    await webhook.send(content=content,
-                                        embeds=message.embeds,
-                                        file=file,
-                                        username=message.author.display_name,
-                                        avatar_url=message.author.avatar_url)
-                    await message.delete()
+    @commands.command(aliases=['url', 'avatar'])
+    async def link(self, ctx: commands.Context, user_or_emoji: typing.Union[discord.User, discord.PartialEmoji] = None):
+        """Get an user or custom emoji link."""
+        if isinstance(user_or_emoji, discord.PartialEmoji):
+            await ctx.reply(user_or_emoji.url)
+        else:
+            await ctx.reply((user_or_emoji or ctx.author).avatar_url)
 
+    @commands.command(name='import')
+    async def emoji_import(self, ctx: commands.Context, emoji: discord.PartialEmoji, name: str = None):
+        """Import a custom emoji."""
+        imported = await ctx.guild.create_custom_emoji(name=name or emoji.name, image=await emoji.url.read())
+        await ctx.reply(imported)
 
 
 def setup(bot):
