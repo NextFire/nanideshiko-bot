@@ -1,7 +1,22 @@
 import discord
 from discord.ext import commands
 
+import asyncio
 import typing
+
+
+async def run(cmd: str):
+    proc = await asyncio.create_subprocess_shell(
+        cmd,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE)
+
+    stdout, stderr = await proc.communicate()
+
+    if stderr:
+        raise commands.CommandError(stderr.decode())
+
+    return stdout.decode() if stdout else None
 
 
 class Utilities(commands.Cog):
@@ -55,6 +70,13 @@ class Utilities(commands.Cog):
         """Import a custom emoji."""
         imported = await ctx.guild.create_custom_emoji(name=name or emoji.name, image=await emoji.url.read())
         await ctx.reply(imported)
+
+    @commands.command()
+    @commands.is_owner()
+    async def speedtest(self, ctx: commands.Context):
+        async with ctx.typing():
+            result = await run('speedtest')
+        await ctx.reply('```' + result + '```')
 
 
 def setup(bot):
