@@ -74,6 +74,7 @@ class Utilities(commands.Cog):
     @commands.command()
     @commands.is_owner()
     async def speedtest(self, ctx: commands.Context):
+        """Run speedtest on the hosting device."""
         async with ctx.typing():
             result = await run('speedtest')
         await ctx.reply('```' + result + '```')

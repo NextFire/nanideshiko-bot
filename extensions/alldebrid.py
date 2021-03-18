@@ -35,6 +35,7 @@ class Alldebrid(commands.Cog):
 
     @commands.command()
     async def magnet(self, ctx: commands.Context, *, magnet: str):
+        """Magnet -> DDL"""
         async with aiohttp.ClientSession() as session:
             ad_magnet = await AlldebridRequests.alldebrid_magnet_upload(session, magnet)
             message = await ctx.send(embed=discord.Embed(title=ad_magnet['name'], description=f"`[{'▒' * 20}] 0.0%`"))
