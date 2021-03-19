@@ -14,7 +14,7 @@ async def run(cmd: str):
     stdout, stderr = await proc.communicate()
 
     if stderr:
-        raise commands.CommandError(stderr.decode())
+        raise commands.CommandError('```' + stderr.decode() + '```')
 
     return stdout.decode() if stdout else None
 
