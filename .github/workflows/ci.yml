@@ -10,7 +10,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Pull new commits
-        run: git pull
+        run: git fetch origin && git reset --hard origin/main
         working-directory: /home/pi/nanideshiko-bot
       - name: Restart bot service
         run: sudo systemctl restart nanideshiko
