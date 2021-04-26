@@ -1,4 +1,3 @@
 __pycache__/
-config/*
-!config/keys_example.py
+config
 .DS_Store

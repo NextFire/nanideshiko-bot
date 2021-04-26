@@ -1,4 +1,4 @@
-# Copy this file to keys.py, uncomment and complete it
+# Copy this file to config/keys.py, uncomment and complete it
 
 # PREFIX = 
 # CLIENT_ID = 
