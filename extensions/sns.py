@@ -8,7 +8,7 @@ import re
 import asyncpraw
 
 from extensions.utilities import Utilities
-from keys import PREFIX, REDDIT_CLIENT_ID, REDDIT_SECRET, REDDIT_USER_AGENT, REDDIT_USERNAME, REDDIT_PASSWORD
+from config.keys import PREFIX, REDDIT_CLIENT_ID, REDDIT_SECRET, REDDIT_USER_AGENT, REDDIT_USERNAME, REDDIT_PASSWORD
 
 
 class RedditCommands(commands.Cog, name='Reddit Commands'):

@@ -5,7 +5,7 @@ import json
 import random
 
 from importlib import resources
-import saves
+import config.saves
 
 # pylint: disable=no-member
 
@@ -14,7 +14,7 @@ class Status(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.lstatus = json.loads(resources.read_binary(saves, 'status.json'))
+        self.lstatus = json.loads(resources.read_binary(config.saves, 'status.json'))
         self.loop_status.start()
 
     @tasks.loop(seconds=30)
@@ -59,7 +59,7 @@ class Status(commands.Cog):
 
     def cog_unload(self):
         self.loop_status.cancel()
-        with resources.path(saves, 'status.json') as path:
+        with resources.path(config.saves, 'status.json') as path:
             with open(path, 'w') as file:
                 json.dump(self.lstatus, file, ensure_ascii=False, indent=4)
 

@@ -4,7 +4,7 @@ from discord.ext import commands
 import aiohttp
 import asyncio
 
-from keys import AD_USER_AGENT, AD_API_KEY
+from config.keys import AD_USER_AGENT, AD_API_KEY
 
 
 AD_MAGNET_UPLOAD_URL = 'https://api.alldebrid.com/v4/magnet/upload'

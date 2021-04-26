@@ -1,0 +1,7 @@
+services:
+  nanideshiko-bot:
+    image: nanideshiko-bot
+    build: .
+    volumes:
+      - ./config:/bot/config
+    restart: unless-stopped

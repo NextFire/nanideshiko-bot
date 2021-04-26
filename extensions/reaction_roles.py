@@ -3,14 +3,14 @@ from discord.ext import commands
 import json
 
 from importlib import resources
-import saves
+import config.saves
 
 
 class ReactionRoles(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.msgs = json.loads(resources.read_binary(saves, 'reaction_roles.json'))
+        self.msgs = json.loads(resources.read_binary(config.saves, 'reaction_roles.json'))
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
@@ -29,7 +29,7 @@ class ReactionRoles(commands.Cog):
             await member.remove_roles(role)
 
     def cog_unload(self):
-        with resources.path(saves, 'reaction_roles.json') as path:
+        with resources.path(config.saves, 'reaction_roles.json') as path:
             with open(path, 'w') as file:
                 json.dump(self.msgs, file, ensure_ascii=False, indent=4)
 

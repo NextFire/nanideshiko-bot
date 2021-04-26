@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-from keys import PREFIX, CLIENT_ID, BOT_TOKEN, BOT_ROOM_ID
+from config.keys import PREFIX, CLIENT_ID, BOT_TOKEN, BOT_ROOM_ID
 
 
 EXTENSIONS = [

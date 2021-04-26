@@ -4,14 +4,14 @@ import json
 import re
 
 from importlib import resources
-import saves
+import config.saves
 
 
 class CustomReactions(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.triggers = json.loads(resources.read_binary(saves, 'custom_reactions.json'))
+        self.triggers = json.loads(resources.read_binary(config.saves, 'custom_reactions.json'))
 
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -65,7 +65,7 @@ class CustomReactions(commands.Cog):
         await ctx.reply(lcr)
 
     def cog_unload(self):
-        with resources.path(saves, 'custom_reactions.json') as path:
+        with resources.path(config.saves, 'custom_reactions.json') as path:
             with open(path, 'w') as file:
                 json.dump(self.triggers, file, ensure_ascii=False, sort_keys=True, indent=4)
 

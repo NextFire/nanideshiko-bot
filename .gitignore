@@ -1,9 +1,4 @@
 __pycache__/
-
-res/*
-saves/*
-!__init__.py
-
-keys.py
-
+config/*
+!config/keys_example.py
 .DS_Store
