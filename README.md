@@ -5,4 +5,4 @@
 ## Run with Docker
 Minimal command: `docker run -v <path to config folder>:/bot/config nextfire/nanideshiko-bot`
 
-The `config` folder must contain a completed copy of [`keys_example.py`](https://github.com/NextFire/nanideshiko-bot/blob/main/keys_example.py).
+The `config` folder must contain a completed copy of [`keys.py`](https://github.com/NextFire/nanideshiko-bot/blob/main/keys.py).
