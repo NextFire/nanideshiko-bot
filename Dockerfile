@@ -4,9 +4,9 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 RUN pip install --no-cache-dir \
-    aiohttp \
+    aiohttp \
     asyncio \
-    asyncpraw \
+    asyncpraw \
     discord.py[voice] \
     youtube_dl
 
