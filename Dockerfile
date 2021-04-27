@@ -14,4 +14,6 @@ COPY . /bot
 
 WORKDIR /bot
 
-ENTRYPOINT ./entrypoint.sh
+ENTRYPOINT [ "./entrypoint.sh" ]
+
+VOLUME [ "/bot/config" ]
