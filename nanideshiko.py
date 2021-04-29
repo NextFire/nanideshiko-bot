@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-from config.keys import PREFIX, CLIENT_ID, BOT_TOKEN, BOT_ROOM_ID
+from config.keys import PREFIX, CLIENT_ID, BOT_TOKEN#, BOT_ROOM_ID
 
 
 EXTENSIONS = [
@@ -27,7 +27,7 @@ for extension in EXTENSIONS:
 async def on_ready():
     print(f'Logged in as {bot.user}')
     print(discord.utils.oauth_url(CLIENT_ID))
-    bot_room = bot.get_channel(BOT_ROOM_ID)
-    await bot_room.send('ただいま〜')
+    # bot_room = bot.get_channel(BOT_ROOM_ID)
+    # await bot_room.send('ただいま〜')
 
 bot.run(BOT_TOKEN)
