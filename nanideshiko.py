@@ -5,7 +5,6 @@ from config.keys import PREFIX, CLIENT_ID, BOT_TOKEN#, BOT_ROOM_ID
 
 
 EXTENSIONS = [
-    'alldebrid',
     'bot_management',
     'custom_reactions',
     'greets',
