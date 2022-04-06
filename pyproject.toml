@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "nanideshiko"
+version = "0.1.0"
+description = ""
+authors = ["NextFire <git@yuru.moe>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+"discord.py" = {extras = ["voice"], version = "^1.7.3"}
+yt-dlp = "^2022.3.8"
+
+[tool.poetry.dev-dependencies]
+yapf = "^0.32.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

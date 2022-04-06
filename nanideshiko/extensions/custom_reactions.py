@@ -1,17 +1,18 @@
-from discord.ext import commands
-
 import json
 import re
-
 from importlib import resources
-import config.saves
+
+from discord.ext import commands
+
+from ..config import saves
 
 
 class CustomReactions(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.triggers = json.loads(resources.read_binary(config.saves, 'custom_reactions.json'))
+        self.triggers = json.loads(
+            resources.read_binary(saves, 'custom_reactions.json'))
 
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -29,7 +30,7 @@ class CustomReactions(commands.Cog):
 
     @commands.command()
     @commands.is_owner()
-    async def acr(self, ctx, trigger, response, mode = "partial"):
+    async def acr(self, ctx, trigger, response, mode="partial"):
         """Adds custom reaction
         mode is partial or exact"""
         mode = mode.lower()
@@ -40,7 +41,7 @@ class CustomReactions(commands.Cog):
 
     @commands.command()
     @commands.is_owner()
-    async def dcr(self, ctx, trigger, mode = None):
+    async def dcr(self, ctx, trigger, mode=None):
         """Deletes custom reaction
         mode is partial or exact"""
         if mode not in (None, "exact", "partial"):
@@ -51,7 +52,7 @@ class CustomReactions(commands.Cog):
         else:
             self.triggers[mode].pop(trigger, None)
         await ctx.message.add_reaction('👌')
-    
+
     @commands.command()
     async def lcr(self, ctx):
         """Lists custom reactions"""
@@ -65,9 +66,13 @@ class CustomReactions(commands.Cog):
         await ctx.reply(lcr)
 
     def cog_unload(self):
-        with resources.path(config.saves, 'custom_reactions.json') as path:
+        with resources.path(saves, 'custom_reactions.json') as path:
             with open(path, 'w') as file:
-                json.dump(self.triggers, file, ensure_ascii=False, sort_keys=True, indent=4)
+                json.dump(self.triggers,
+                          file,
+                          ensure_ascii=False,
+                          sort_keys=True,
+                          indent=4)
 
 
 def setup(bot):

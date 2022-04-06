@@ -1,7 +1,7 @@
+from typing import Union
+
 import discord
 from discord.ext import commands
-
-import typing
 
 
 class Utilities(commands.Cog):
@@ -22,7 +22,9 @@ class Utilities(commands.Cog):
         """Bot ping test"""
         pong = await ctx.send('🏓')
         ping = ctx.message
-        await ctx.send('`' + str(int(pong.created_at.timestamp() * 1000) - int(ping.created_at.timestamp() * 1000)) + ' ms`')
+        await ctx.send('`' + str(
+            int(pong.created_at.timestamp() * 1000) -
+            int(ping.created_at.timestamp() * 1000)) + ' ms`')
 
     @commands.command(aliases=['prune'])
     @commands.is_owner()
@@ -43,7 +45,10 @@ class Utilities(commands.Cog):
         await channel.send(msg)
 
     @commands.command(aliases=['url', 'avatar'])
-    async def link(self, ctx: commands.Context, user_or_emoji: typing.Union[discord.User, discord.PartialEmoji] = None):
+    async def link(self,
+                   ctx: commands.Context,
+                   user_or_emoji: Union[discord.User,
+                                        discord.PartialEmoji] = None):
         """Get an user or custom emoji link."""
         if isinstance(user_or_emoji, discord.PartialEmoji):
             await ctx.reply(user_or_emoji.url)
@@ -51,9 +56,14 @@ class Utilities(commands.Cog):
             await ctx.reply((user_or_emoji or ctx.author).avatar_url)
 
     @commands.command(name='import')
-    async def emoji_import(self, ctx: commands.Context, emoji: discord.PartialEmoji, name: str = None):
+    async def emoji_import(self,
+                           ctx: commands.Context,
+                           emoji: discord.PartialEmoji,
+                           name: str = None):
         """Import a custom emoji."""
-        imported = await ctx.guild.create_custom_emoji(name=name or emoji.name, image=await emoji.url.read())
+        imported = await ctx.guild.create_custom_emoji(name=name or emoji.name,
+                                                       image=await
+                                                       emoji.url.read())
         await ctx.reply(imported)
 
 

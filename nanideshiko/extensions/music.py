@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Copyright (c) 2019 Valentin B. (with added modifications and fixes by NextFire)
+Copyright (c) 2019 Valentin B. (with modifications and fixes by NextFire)
 
 A simple music bot written in discord.py using youtube-dl.
 
@@ -23,12 +23,12 @@ import math
 import random
 
 import discord
-import youtube_dl
+from yt_dlp import YoutubeDL
 from async_timeout import timeout
 from discord.ext import commands
 
 # Silence useless bug reports messages
-youtube_dl.utils.bug_reports_message = lambda: ''
+# youtube_dl.utils.bug_reports_message = lambda: ''
 
 
 class VoiceError(Exception):
@@ -61,7 +61,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
         'options': '-vn',
     }
 
-    ytdl = youtube_dl.YoutubeDL(YTDL_OPTIONS)
+    ytdl = YoutubeDL(YTDL_OPTIONS)
 
     def __init__(self, ctx: commands.Context, source: discord.FFmpegPCMAudio, *, data: dict, volume: float = 0.5):
         super().__init__(source, volume)

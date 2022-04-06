@@ -14,7 +14,7 @@ class BotManagement(commands.Cog):
         self.bot.unload_extension('extensions.status')
         await self.bot.change_presence(activity=discord.Game(name=arg))
         await ctx.message.add_reaction('👌')
-    
+
     @commands.command(aliases=['ls'])
     @commands.is_owner()
     async def lstatus(self, ctx: commands.Context):
