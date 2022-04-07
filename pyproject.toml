@@ -8,6 +8,8 @@ authors = ["NextFire <git@yuru.moe>"]
 python = "^3.10"
 "discord.py" = {extras = ["voice"], version = "^1.7.3"}
 yt-dlp = "^2022.3.8"
+feedparser = "^6.0.8"
+html2text = "^2020.1.16"
 
 [tool.poetry.dev-dependencies]
 yapf = "^0.32.0"

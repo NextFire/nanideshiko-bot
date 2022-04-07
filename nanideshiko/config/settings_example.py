@@ -4,3 +4,5 @@ LOG_LEVEL = 'INFO'
 
 # BOT_TOKEN =
 # PREFIX =
+
+# RSS_CHANNEL_ID =

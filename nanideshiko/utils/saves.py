@@ -1,11 +1,13 @@
 import json
+from contextlib import suppress
 from importlib import resources
 
 from ..config import saves
 
 
 def sload(key: str):
-    return json.loads(resources.read_binary(saves, f"{key}.json"))
+    with suppress(FileNotFoundError):
+        return json.loads(resources.read_binary(saves, f"{key}.json"))
 
 
 def sdump(key: str, data):

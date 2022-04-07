@@ -94,6 +94,25 @@ docs = ["sphinx (==3.0.3)", "sphinxcontrib-trio (==1.1.2)", "sphinxcontrib-websu
 voice = ["PyNaCl (>=1.3.0,<1.5)"]
 
 [[package]]
+name = "feedparser"
+version = "6.0.8"
+description = "Universal feed parser, handles RSS 0.9x, RSS 1.0, RSS 2.0, CDF, Atom 0.3, and Atom 1.0 feeds"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+sgmllib3k = "*"
+
+[[package]]
+name = "html2text"
+version = "2020.1.16"
+description = "Turn HTML into equivalent Markdown-structured text."
+category = "main"
+optional = false
+python-versions = ">=3.5"
+
+[[package]]
 name = "idna"
 version = "3.3"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -148,6 +167,14 @@ six = "*"
 [package.extras]
 docs = ["sphinx (>=1.6.5)", "sphinx-rtd-theme"]
 tests = ["pytest (>=3.2.1,!=3.3.0)", "hypothesis (>=3.27.0)"]
+
+[[package]]
+name = "sgmllib3k"
+version = "1.0.0"
+description = "Py3k port of sgmllib."
+category = "main"
+optional = false
+python-versions = "*"
 
 [[package]]
 name = "six"
@@ -211,7 +238,7 @@ websockets = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "9e6b169ab129ee569ac98193f589c847ebde2a9d6147519a20b66ffdf74d459a"
+content-hash = "ab402259a4ff16d242e570a86a5757e019a0c07e70879d98b2fe6cf2f837a7fe"
 
 [metadata.files]
 aiohttp = [
@@ -417,6 +444,14 @@ chardet = [
     {file = "discord.py-1.7.3-py3-none-any.whl", hash = "sha256:c6f64db136de0e18e090f6752ea68bdd4ab0a61b82dfe7acecefa22d6477bb0c"},
     {file = "discord.py-1.7.3.tar.gz", hash = "sha256:462cd0fe307aef8b29cbfa8dd613e548ae4b2cb581d46da9ac0d46fb6ea19408"},
 ]
+feedparser = [
+    {file = "feedparser-6.0.8-py3-none-any.whl", hash = "sha256:1b7f57841d9cf85074deb316ed2c795091a238adb79846bc46dccdaf80f9c59a"},
+    {file = "feedparser-6.0.8.tar.gz", hash = "sha256:5ce0410a05ab248c8c7cfca3a0ea2203968ee9ff4486067379af4827a59f9661"},
+]
+html2text = [
+    {file = "html2text-2020.1.16-py3-none-any.whl", hash = "sha256:c7c629882da0cf377d66f073329ccf34a12ed2adf0169b9285ae4e63ef54c82b"},
+    {file = "html2text-2020.1.16.tar.gz", hash = "sha256:e296318e16b059ddb97f7a8a1d6a5c1d7af4544049a01e261731d2d5cc277bbb"},
+]
 idna = [
     {file = "idna-3.3-py3-none-any.whl", hash = "sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff"},
     {file = "idna-3.3.tar.gz", hash = "sha256:9d643ff0a55b762d5cdb124b8eaa99c66322e2157b69160bc32796e824360e6d"},
@@ -538,6 +573,9 @@ pynacl = [
     {file = "PyNaCl-1.4.0-cp38-cp38-win32.whl", hash = "sha256:9c4a7ea4fb81536c1b1f5cc44d54a296f96ae78c1ebd2311bd0b60be45a48d96"},
     {file = "PyNaCl-1.4.0-cp38-cp38-win_amd64.whl", hash = "sha256:7c6092102219f59ff29788860ccb021e80fffd953920c4a8653889c029b2d420"},
     {file = "PyNaCl-1.4.0.tar.gz", hash = "sha256:54e9a2c849c742006516ad56a88f5c74bf2ce92c9f67435187c3c5953b346505"},
+]
+sgmllib3k = [
+    {file = "sgmllib3k-1.0.0.tar.gz", hash = "sha256:7868fb1c8bfa764c1ac563d3cf369c381d1325d36124933a726f29fcdaa812e9"},
 ]
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},

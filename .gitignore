@@ -1,4 +1,6 @@
 .DS_Store
 .venv/
 __pycache__/
-nanideshiko/config/
+
+nanideshiko/config/*
+!nanideshiko/config/settings_example.py
