@@ -11,4 +11,4 @@ def sload(key: str):
 def sdump(key: str, data):
     with resources.path(saves, f"{key}.json") as p:
         with open(p, 'w') as f:
-            json.dump(data, f, ensure_ascii=False, sort_keys=True, indent=4)
+            json.dump(data, f, ensure_ascii=False, sort_keys=True, indent=2)
