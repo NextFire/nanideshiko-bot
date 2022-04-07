@@ -43,8 +43,8 @@ class RSS(commands.Cog):
         async with aiohttp.ClientSession() as session:
             while True:
                 logger.info('Processing RSS feeds')
-                await asyncio.gather(
-                    *(self.process_feed(feed, session) for feed in self.feeds))
+                for feed in self.feeds:
+                    asyncio.create_task(self.process_feed(feed, session))
                 await asyncio.sleep(3600)
 
     async def process_feed(self, feed: dict, session: aiohttp.ClientSession):
