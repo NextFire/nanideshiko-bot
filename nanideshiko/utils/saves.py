@@ -13,7 +13,7 @@ def sload(key: str):
         data = json.loads(resources.read_binary(saves, f"{key}.json"))
         logger.info(f'Loading {key}')
     except FileNotFoundError:
-        logger.info(f'{key} not found')
+        logger.error(f'{key} not found')
     return data
 
 

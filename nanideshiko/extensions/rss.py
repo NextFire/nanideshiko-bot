@@ -78,9 +78,6 @@ class RSS(commands.Cog):
         embed.title = entry.title
         embed.url = entry.link
         embed.description = html2text.handle(entry.summary)
-        embed.set_author(name=data.feed.title, url=data.feed.link)
-        embed.timestamp = datetime.utcfromtimestamp(
-            mktime(entry.published_parsed))
         return embed
 
 
