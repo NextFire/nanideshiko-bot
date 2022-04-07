@@ -2,6 +2,5 @@
 
 LOG_LEVEL = 'INFO'
 
-# CLIENT_ID =
 # BOT_TOKEN =
 # PREFIX =
