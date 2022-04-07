@@ -1,20 +1,19 @@
-import json
-from importlib import resources
-
+import discord
 from discord.ext import commands
 
-from ..config import saves
+from ..utils.saves import sdump, sload
 
 
 class ReactionRoles(commands.Cog):
+    SAVE_KEY = 'reaction_roles'
 
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
-        self.msgs = json.loads(
-            resources.read_binary(saves, 'reaction_roles.json'))
+        self.msgs = sload(self.SAVE_KEY)
 
     @commands.Cog.listener()
-    async def on_raw_reaction_add(self, payload):
+    async def on_raw_reaction_add(self,
+                                  payload: discord.RawReactionActionEvent):
         if str(payload.message_id) in list(self.msgs):
             guild = self.bot.get_guild(payload.guild_id)
             role = guild.get_role(
@@ -23,7 +22,8 @@ class ReactionRoles(commands.Cog):
             await member.add_roles(role)
 
     @commands.Cog.listener()
-    async def on_raw_reaction_remove(self, payload):
+    async def on_raw_reaction_remove(self,
+                                     payload: discord.RawReactionActionEvent):
         if str(payload.message_id) in list(self.msgs):
             guild = self.bot.get_guild(payload.guild_id)
             role = guild.get_role(
@@ -32,10 +32,8 @@ class ReactionRoles(commands.Cog):
             await member.remove_roles(role)
 
     def cog_unload(self):
-        with resources.path(saves, 'reaction_roles.json') as path:
-            with open(path, 'w') as file:
-                json.dump(self.msgs, file, ensure_ascii=False, indent=4)
+        sdump(self.SAVE_KEY, self.msgs)
 
 
-def setup(bot):
+def setup(bot: commands.Bot):
     bot.add_cog(ReactionRoles(bot))

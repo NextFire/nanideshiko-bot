@@ -1,20 +1,21 @@
-import json
 from importlib import resources
 
 import discord
 from discord.ext import commands
 
-from ..config import res, saves
+from ..config import res
+from ..utils.saves import sdump, sload
 
 
 class Greets(commands.Cog):
+    SAVE_KEY = 'greets'
 
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
-        self.guildpics = json.loads(resources.read_binary(saves, 'greets.json'))
+        self.guildpics = sload(self.SAVE_KEY)
 
     @commands.Cog.listener()
-    async def on_member_join(self, member):
+    async def on_member_join(self, member: discord.Member):
         if member.guild.system_channel is not None:
             try:
                 with resources.path(res, self.guildpics[str(
@@ -26,21 +27,15 @@ class Greets(commands.Cog):
                 f'> Bienvenue {member.mention} !', file=file)
 
     @commands.Cog.listener()
-    async def on_member_remove(self, member):
+    async def on_member_remove(self, member: discord.Member):
         if member.guild.system_channel is not None:
             await member.guild.system_channel.send(
                 '> **{0.name}#{0.discriminator}** nous a quitté.'.format(member)
             )
 
     def cog_unload(self):
-        with resources.path(saves, 'greets.json') as path:
-            with open(path, 'w') as file:
-                json.dump(self.guildpics,
-                          file,
-                          ensure_ascii=False,
-                          sort_keys=True,
-                          indent=4)
+        sdump(self.SAVE_KEY, self.guildpics)
 
 
-def setup(bot):
+def setup(bot: commands.Bot):
     bot.add_cog(Greets(bot))

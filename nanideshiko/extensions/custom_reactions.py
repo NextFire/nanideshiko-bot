@@ -1,21 +1,20 @@
-import json
 import re
-from importlib import resources
 
+import discord
 from discord.ext import commands
 
-from ..config import saves
+from ..utils.saves import sdump, sload
 
 
 class CustomReactions(commands.Cog):
+    SAVE_KEY = 'custom_reactions'
 
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
-        self.triggers = json.loads(
-            resources.read_binary(saves, 'custom_reactions.json'))
+        self.triggers = sload(self.SAVE_KEY)
 
     @commands.Cog.listener()
-    async def on_message(self, message):
+    async def on_message(self, message: discord.Message):
         if message.author == self.bot.user:
             return
         if message.content[:0] == self.bot.command_prefix:
@@ -30,7 +29,11 @@ class CustomReactions(commands.Cog):
 
     @commands.command()
     @commands.is_owner()
-    async def acr(self, ctx, trigger, response, mode="partial"):
+    async def acr(self,
+                  ctx: commands.Context,
+                  trigger: str,
+                  response: str,
+                  mode: str = "partial"):
         """Adds custom reaction
         mode is partial or exact"""
         mode = mode.lower()
@@ -41,7 +44,7 @@ class CustomReactions(commands.Cog):
 
     @commands.command()
     @commands.is_owner()
-    async def dcr(self, ctx, trigger, mode=None):
+    async def dcr(self, ctx: commands.Context, trigger: str, mode: str = None):
         """Deletes custom reaction
         mode is partial or exact"""
         if mode not in (None, "exact", "partial"):
@@ -54,7 +57,7 @@ class CustomReactions(commands.Cog):
         await ctx.message.add_reaction('👌')
 
     @commands.command()
-    async def lcr(self, ctx):
+    async def lcr(self, ctx: commands.Context):
         """Lists custom reactions"""
         lcr = '```\n'
         for mode in ("exact", "partial"):
@@ -66,14 +69,8 @@ class CustomReactions(commands.Cog):
         await ctx.reply(lcr)
 
     def cog_unload(self):
-        with resources.path(saves, 'custom_reactions.json') as path:
-            with open(path, 'w') as file:
-                json.dump(self.triggers,
-                          file,
-                          ensure_ascii=False,
-                          sort_keys=True,
-                          indent=4)
+        sdump(self.SAVE_KEY, self.triggers)
 
 
-def setup(bot):
+def setup(bot: commands.Bot):
     bot.add_cog(CustomReactions(bot))

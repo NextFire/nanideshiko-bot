@@ -1,24 +1,14 @@
-from typing import Union
-
 import discord
 from discord.ext import commands
 
 
 class Utilities(commands.Cog):
 
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-    @staticmethod
-    async def get_webhook(channel: discord.TextChannel):
-        webhooks = await channel.webhooks()
-        if webhooks:
-            return webhooks[0]
-        else:
-            return await channel.create_webhook(name="nanideshiko")
-
     @commands.command()
-    async def ping(self, ctx):
+    async def ping(self, ctx: commands.Context):
         """Bot ping test"""
         pong = await ctx.send('🏓')
         ping = ctx.message
@@ -28,27 +18,25 @@ class Utilities(commands.Cog):
 
     @commands.command(aliases=['prune'])
     @commands.is_owner()
-    async def rm(self, ctx, number):
+    async def rm(self, ctx: commands.Context, number: int):
         """Removes last <number> msgs"""
         msgs = []  # Empty list to put all the messages in the log
         # Converting the amount of messages to delete to an integer
-        number = int(number)
         async for x in ctx.message.channel.history(limit=number + 1):
             msgs.append(x)
         await ctx.channel.delete_messages(msgs)
 
     @commands.command(hidden=True, aliases=['send'])
     @commands.is_owner()
-    async def say(self, ctx, id, *, msg):
+    async def say(self, ctx: commands.Context, id: int, *, msg: str):
         """Sends <msg> to channel <id> with this bot"""
-        channel = self.bot.get_channel(int(id))
+        channel = self.bot.get_channel(id)
         await channel.send(msg)
 
     @commands.command(aliases=['url', 'avatar'])
     async def link(self,
                    ctx: commands.Context,
-                   user_or_emoji: Union[discord.User,
-                                        discord.PartialEmoji] = None):
+                   user_or_emoji: discord.User | discord.PartialEmoji = None):
         """Get an user or custom emoji link."""
         if isinstance(user_or_emoji, discord.PartialEmoji):
             await ctx.reply(user_or_emoji.url)
@@ -67,5 +55,5 @@ class Utilities(commands.Cog):
         await ctx.reply(imported)
 
 
-def setup(bot):
+def setup(bot: commands.Bot):
     bot.add_cog(Utilities(bot))

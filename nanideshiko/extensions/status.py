@@ -1,18 +1,17 @@
-import json
 import random
-from importlib import resources
 
 import discord
 from discord.ext import commands, tasks
 
-from ..config import saves
+from ..utils.saves import sdump, sload
 
 
 class Status(commands.Cog):
+    SAVE_KEY = 'status'
 
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
-        self.lstatus = json.loads(resources.read_binary(saves, 'status.json'))
+        self.lstatus = sload(self.SAVE_KEY)
         self.loop_status.start()
 
     @tasks.loop(seconds=30)
@@ -29,7 +28,7 @@ class Status(commands.Cog):
 
     @commands.command(aliases=['als'])
     @commands.is_owner()
-    async def alstatus(self, ctx, type, *, name):
+    async def alstatus(self, ctx: commands.Context, type: str, *, name: str):
         """Adds status to loop list"""
         if type.lower() not in ('playing', 'listening', 'watching'):
             raise commands.CommandError(
@@ -38,7 +37,7 @@ class Status(commands.Cog):
         await ctx.message.add_reaction('👌')
 
     @commands.command(aliases=['lls'])
-    async def llstatus(self, ctx):
+    async def llstatus(self, ctx: commands.Context):
         """Shows loop status list"""
         lls = '```\n'
         for i in range(len(self.lstatus)):
@@ -49,17 +48,15 @@ class Status(commands.Cog):
 
     @commands.command(aliases=['rls'])
     @commands.is_owner()
-    async def rlstatus(self, ctx, item: int):
+    async def rlstatus(self, ctx: commands.Context, item: int):
         """Removes status of loop list"""
         self.lstatus.pop(item)
         await ctx.message.add_reaction('👌')
 
     def cog_unload(self):
         self.loop_status.cancel()
-        with resources.path(saves, 'status.json') as path:
-            with open(path, 'w') as file:
-                json.dump(self.lstatus, file, ensure_ascii=False, indent=4)
+        sdump(self.SAVE_KEY, self.lstatus)
 
 
-def setup(bot):
+def setup(bot: commands.Bot):
     bot.add_cog(Status(bot))
