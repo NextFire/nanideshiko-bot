@@ -45,24 +45,26 @@ class RSS(commands.Cog):
                 logger.info('Processing RSS feeds')
                 await asyncio.gather(
                     *(self.process_feed(feed, session) for feed in self.feeds))
+                self.last_update = datetime.utcnow()
                 await asyncio.sleep(3600)
 
     async def process_feed(self, feed: dict, session: aiohttp.ClientSession):
         async with session.get(feed['url']) as resp:
             text = await resp.text()
         data = feedparser.parse(text)
+        logger.debug(data)
 
         new_entries = [
             e for e in data.entries if datetime.utcfromtimestamp(
                 mktime(e.published_parsed)) > self.last_update
         ]
-        self.last_update = datetime.utcnow()
 
         if new_entries and feed['filter'] is not None:
             regex = re.compile(fr"\b{feed['filter']}\b", re.IGNORECASE)
             new_entries = [e for e in new_entries if regex.search(e.title)]
 
         if new_entries:
+            logger.info(new_entries)
             asyncio.create_task(self.send(data, new_entries))
 
     async def send(self, data: dict, entries: list[dict]):
